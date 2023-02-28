@@ -19,7 +19,7 @@ let lessons: string[][] = [
   ['ID 3', 'ID 1'],
 ];
 
-function rearrangeClasses(lessons: string[][]) {
+function rearrangeLessons(lessons: string[][]) {
   let flatLessons = lessons.flat();
   let newLessons: string[][] = [];
   let flatLessonsPosition = 0;
@@ -49,4 +49,4 @@ function rearrangeClasses(lessons: string[][]) {
   return newLessons;
 }
 
-console.log(rearrangeClasses(lessons));
+console.log(rearrangeLessons(lessons));
