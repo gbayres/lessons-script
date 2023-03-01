@@ -20,14 +20,15 @@ let lessons: LessonType[] = [
   { lessonId: 'Lesson 8', classifications: ['Classification 6'] },
   { lessonId: 'Lesson 9', classifications: ['Classification 6', 'Classification 4'] },
   { lessonId: 'Lesson 10', classifications: ['Classification 6', 'Classification 2', 'Classification 7'] },
-  { lessonId: 'Lesson 11', classifications: ['Classification 6', 'Classification 2', 'Classification 7'] },
+  { lessonId: 'Lesson 11', classifications: ['Classification 6', 'Classification 2', 'Classification 5'] },
   { lessonId: 'Lesson 12', classifications: ['Classification 3', 'Classification 1'] },
+  { lessonId: 'Lesson 13', classifications: ['Classification 6', 'Classification 4', 'Classification 2', 'Classification 7'] },
 ];
 
 function rearrangeLessons(lessons: LessonType[]) {
   const arrayOfClassifications = lessons.map(x => x.classifications);
   let flatLessons = arrayOfClassifications.flat();
-  let finalLessonIds: LessonType[] = [];
+  let rearrangedLessons: LessonType[] = [];
   let flatLessonsPosition = 0;
 
   for (let lessonIndex = 0; lessonIndex < arrayOfClassifications.length; lessonIndex++) {
@@ -36,8 +37,8 @@ function rearrangeLessons(lessons: LessonType[]) {
     for (let contentIndex = 0; contentIndex < arrayOfClassifications[lessonIndex].length; contentIndex++) {
       flatLessonsPosition += 1;
       let currContent = arrayOfClassifications[lessonIndex][contentIndex];
-      let moreRecentLessons = flatLessons.slice(flatLessonsPosition);
-      let nextContentsIncludeCurrContent = moreRecentLessons.includes(currContent);
+      let mostRecentLessons = flatLessons.slice(flatLessonsPosition);
+      let nextContentsIncludeCurrContent = mostRecentLessons.includes(currContent);
       
       if (nextContentsIncludeCurrContent) {
         outdatedContents += 1;
@@ -47,12 +48,12 @@ function rearrangeLessons(lessons: LessonType[]) {
       let isAtTheLastIndexOfLessonContents = arrayOfClassifications[lessonIndex].length === contentIndex + 1;
 
       if (notAllContentsInLessonAreOutdated && isAtTheLastIndexOfLessonContents) {
-        finalLessonIds.push(lessons[lessonIndex]);
+        rearrangedLessons.push(lessons[lessonIndex]);
       }
     }
   
   }
-  return finalLessonIds;
+  return rearrangedLessons;
 }
 
 console.log(rearrangeLessons(lessons));
