@@ -4,32 +4,38 @@
 // Esse script vai "excluir" aulas antigas que já foram completamente abraçadas por aulas mais novas
 // Exemplo: Se a aula 1 abraça "ID 1", a aula 2 abraça "ID 2" e a aula 3 abraça "ID 1 + ID 2", o script só retornará a aula 3
 
-let lessons: string[][] = [
-  ['ID 1', 'ID 2'],
-  ['ID 3'],
-  ['ID 4', 'ID 2'],
-  ['ID 1'],
-  ['ID 2'],
-  ['ID 5'],
-  ['ID 4'],
-  ['ID 6'],
-  ['ID 6', 'ID 4'],
-  ['ID 6', 'ID 2', 'ID 7'],
-  ['ID 6', 'ID 2', 'ID 7'],
-  ['ID 3', 'ID 1'],
+type LessonType = {
+  lessonId: string,
+  classifications: string[],
+}
+
+let lessons: LessonType[] = [
+  { lessonId: 'Lesson 1', classifications: ['Classification 1', 'Classification 2'] },
+  { lessonId: 'Lesson 2', classifications: ['Classification 3'] },
+  { lessonId: 'Lesson 3', classifications: ['Classification 4', 'Classification 2'] },
+  { lessonId: 'Lesson 4', classifications: ['Classification 1'] },
+  { lessonId: 'Lesson 5', classifications: ['Classification 2'] },
+  { lessonId: 'Lesson 6', classifications: ['Classification 5'] },
+  { lessonId: 'Lesson 7', classifications: ['Classification 4'] },
+  { lessonId: 'Lesson 8', classifications: ['Classification 6'] },
+  { lessonId: 'Lesson 9', classifications: ['Classification 6', 'Classification 4'] },
+  { lessonId: 'Lesson 10', classifications: ['Classification 6', 'Classification 2', 'Classification 7'] },
+  { lessonId: 'Lesson 11', classifications: ['Classification 6', 'Classification 2', 'Classification 7'] },
+  { lessonId: 'Lesson 12', classifications: ['Classification 3', 'Classification 1'] },
 ];
 
-function rearrangeLessons(lessons: string[][]) {
-  let flatLessons = lessons.flat();
-  let newLessons: string[][] = [];
+function rearrangeLessons(lessons: LessonType[]) {
+  const arrayOfClassifications = lessons.map(x => x.classifications);
+  let flatLessons = arrayOfClassifications.flat();
+  let finalLessonIds: LessonType[] = [];
   let flatLessonsPosition = 0;
 
-  for (let lessonIndex = 0; lessonIndex < lessons.length; lessonIndex++) {
+  for (let lessonIndex = 0; lessonIndex < arrayOfClassifications.length; lessonIndex++) {
     let outdatedContents = 0;
 
-    for (let contentIndex = 0; contentIndex < lessons[lessonIndex].length; contentIndex++) {
+    for (let contentIndex = 0; contentIndex < arrayOfClassifications[lessonIndex].length; contentIndex++) {
       flatLessonsPosition += 1;
-      let currContent = lessons[lessonIndex][contentIndex];
+      let currContent = arrayOfClassifications[lessonIndex][contentIndex];
       let moreRecentLessons = flatLessons.slice(flatLessonsPosition);
       let nextContentsIncludeCurrContent = moreRecentLessons.includes(currContent);
       
@@ -37,16 +43,16 @@ function rearrangeLessons(lessons: string[][]) {
         outdatedContents += 1;
       }
 
-      let notAllContentsInLessonAreOutdated = (lessons[lessonIndex].length !== outdatedContents);
-      let isAtTheLastIndexOfLessonContents = lessons[lessonIndex].length === contentIndex + 1;
+      let notAllContentsInLessonAreOutdated = (arrayOfClassifications[lessonIndex].length !== outdatedContents);
+      let isAtTheLastIndexOfLessonContents = arrayOfClassifications[lessonIndex].length === contentIndex + 1;
 
       if (notAllContentsInLessonAreOutdated && isAtTheLastIndexOfLessonContents) {
-        newLessons.push(lessons[lessonIndex]);
+        finalLessonIds.push(lessons[lessonIndex]);
       }
     }
   
   }
-  return newLessons;
+  return finalLessonIds;
 }
 
 console.log(rearrangeLessons(lessons));
