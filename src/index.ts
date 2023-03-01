@@ -26,28 +26,28 @@ let lessons: LessonType[] = [
 ];
 
 function rearrangeLessons(lessons: LessonType[]) {
+  const rearrangedLessons: LessonType[] = [];
   const arrayOfClassifications = lessons.map(x => x.classifications);
-  let flatLessons = arrayOfClassifications.flat();
-  let rearrangedLessons: LessonType[] = [];
-  let flatLessonsPosition = 0;
+  const flatArrayOfClassifications = arrayOfClassifications.flat();
+  let flatArrayOfClassificationsPosition = 0;
 
   for (let lessonIndex = 0; lessonIndex < arrayOfClassifications.length; lessonIndex++) {
-    let outdatedContents = 0;
+    let outdatedClassifications = 0;
 
-    for (let contentIndex = 0; contentIndex < arrayOfClassifications[lessonIndex].length; contentIndex++) {
-      flatLessonsPosition += 1;
-      let currContent = arrayOfClassifications[lessonIndex][contentIndex];
-      let mostRecentLessons = flatLessons.slice(flatLessonsPosition);
-      let nextContentsIncludeCurrContent = mostRecentLessons.includes(currContent);
+    for (let classificationIndex = 0; classificationIndex < arrayOfClassifications[lessonIndex].length; classificationIndex++) {
+      flatArrayOfClassificationsPosition += 1;
+      let currClassification = arrayOfClassifications[lessonIndex][classificationIndex];
+      let mostRecentLessons = flatArrayOfClassifications.slice(flatArrayOfClassificationsPosition);
+      let nextClassificationsIncludeCurrClassification = mostRecentLessons.includes(currClassification);
       
-      if (nextContentsIncludeCurrContent) {
-        outdatedContents += 1;
+      if (nextClassificationsIncludeCurrClassification) {
+        outdatedClassifications += 1;
       }
 
-      let notAllContentsInLessonAreOutdated = (arrayOfClassifications[lessonIndex].length !== outdatedContents);
-      let isAtTheLastIndexOfLessonContents = arrayOfClassifications[lessonIndex].length === contentIndex + 1;
+      let notAllClassificationsInLessonAreOutdated = (arrayOfClassifications[lessonIndex].length !== outdatedClassifications);
+      let isAtTheLastIndexOfLessonClassifications = arrayOfClassifications[lessonIndex].length === classificationIndex + 1;
 
-      if (notAllContentsInLessonAreOutdated && isAtTheLastIndexOfLessonContents) {
+      if (notAllClassificationsInLessonAreOutdated && isAtTheLastIndexOfLessonClassifications) {
         rearrangedLessons.push(lessons[lessonIndex]);
       }
     }
