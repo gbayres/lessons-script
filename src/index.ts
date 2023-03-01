@@ -37,8 +37,8 @@ function rearrangeLessons(lessons: LessonType[]) {
     for (let classificationIndex = 0; classificationIndex < arrayOfClassifications[lessonIndex].length; classificationIndex++) {
       flatArrayOfClassificationsPosition += 1;
       let currClassification = arrayOfClassifications[lessonIndex][classificationIndex];
-      let mostRecentLessons = flatArrayOfClassifications.slice(flatArrayOfClassificationsPosition);
-      let nextClassificationsIncludeCurrClassification = mostRecentLessons.includes(currClassification);
+      let nextClassifications = flatArrayOfClassifications.slice(flatArrayOfClassificationsPosition);
+      let nextClassificationsIncludeCurrClassification = nextClassifications.includes(currClassification);
       
       if (nextClassificationsIncludeCurrClassification) {
         outdatedClassifications += 1;
